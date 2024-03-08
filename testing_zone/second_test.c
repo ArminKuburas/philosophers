@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 02:58:58 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/08 03:10:58 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/08 03:14:51 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ void	*thread_func(void *arg)
 	struct s_data	*data;
 	int				id;
 
-	if (data->philo == 1)
-		usleep(1000);
 	printf("Thread function\n");
 	data = (struct s_data *)arg;
+	if (data->philo == 1)
+		usleep(1000);
 	id = data->philo;
 	printf("Thread %d: I am alive\n", id);
 	while (1)
 	{
 		printf("Thread %d: I am waiting\n", id);
 		pthread_mutex_lock(data->left);
+		pthread_mutex_lock(data->right);
 		printf("Thread %d: I am using the mutex\n", id);
+		pthread_mutex_unlock(data->left);
 		pthread_mutex_unlock(data->right);
 		printf("Thread %d: I am done using the mutex\n", id);
 		usleep(1000);
@@ -73,7 +75,13 @@ int	main(void)
 	data = malloc(2 * sizeof(struct s_data));
 	locks = malloc(2 * sizeof(pthread_mutex_t));
 	set_up_data(data, locks);
+	printf("after mutex init\n");
 	pthread_create(&thread1, NULL, thread_func, &data[0]);
 	pthread_create(&thread2, NULL, thread_func, &data[1]);
+	printf("after thread create function calls.\n");
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+	free(data);
+	free(locks);
 	return (0);
 }
