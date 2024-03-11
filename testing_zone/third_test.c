@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 03:17:39 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 03:32:47 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/11 07:34:32 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ int	main(void)
 	printf("Time: %ld\n", initial_time.tv_sec);
 	printf("Time: %ld\n", initial_time.tv_usec);
 	gettimeofday(&time, NULL);
-	printf("Time after sleep: %ld\n", time.tv_sec - initial_time.tv_sec);
-	printf("Time after sleep: %ld\n", time.tv_usec - initial_time.tv_usec);
+	printf("Time after setting initial time: %ld\n", time.tv_sec - initial_time.tv_sec);
+	printf("Time after setting initial time: %ld\n", time.tv_usec - initial_time.tv_usec);
+	usleep(500000);
+	gettimeofday(&time, NULL);
+	printf("Time after 500000 sleep: %ld\n", time.tv_sec - initial_time.tv_sec);
+	printf("Time after 500000 sleep: %ld\n", time.tv_usec - initial_time.tv_usec);
+	usleep(500000);
+	gettimeofday(&time, NULL);
+	printf("Time after 1 million sleep: %ld\n", time.tv_sec - initial_time.tv_sec);
+	printf("Time after 1 million sleep: %ld\n", time.tv_usec - initial_time.tv_usec);
 	return (0);
 }
