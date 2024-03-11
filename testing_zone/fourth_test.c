@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fourth_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 11:37:24 by akuburas         ###   ########.fr       */
+/*   Created: 2024/03/11 09:36:32 by akuburas          #+#    #+#             */
+/*   Updated: 2024/03/11 09:40:04 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	*pointer_to_array(void)
 {
-	int	argv_int[5];
+	int	pointer[1];
 
-	if (argc < 5 || argc > 6)
-	{
-		printf("You have either given too many arguments or too few\n");
-		return (1);
-	}
-	argument_converter(argv_int, argv, argc);
-	if (argv_int[0] == -1)
-		return (1);
-	int i;
-	i = 0;
-	while (i < 5)
-	printf("This is argv_int[%d]")
+	*pointer = 5;
+	return (pointer);
+}
+
+int	main(void)
+{
+	int	*i;
+
+	i = pointer_to_array();
+	printf("This is i = %d", *i);
 	return (0);
 }

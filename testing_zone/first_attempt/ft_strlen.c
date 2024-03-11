@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 11:37:24 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/25 15:19:24 by akuburas          #+#    #+#             */
+/*   Updated: 2024/03/11 11:34:50 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+size_t	ft_strlen(const char *s)
 {
-	int	argv_int[5];
+	size_t	len;
 
-	if (argc < 5 || argc > 6)
+	len = 0;
+	while (s[len] != '\0')
 	{
-		printf("You have either given too many arguments or too few\n");
-		return (1);
+		len++;
 	}
-	argument_converter(argv_int, argv, argc);
-	if (argv_int[0] == -1)
-		return (1);
-	int i;
-	i = 0;
-	while (i < 5)
-	printf("This is argv_int[%d]")
-	return (0);
+	return (len);
 }

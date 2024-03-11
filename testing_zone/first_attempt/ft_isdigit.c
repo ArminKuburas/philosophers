@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 11:37:24 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/24 16:43:56 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/02 12:56:15 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-int	main(int argc, char **argv)
+int	ft_isdigit(int c)
 {
-	int	argv_int[5];
-
-	if (argc < 5 || argc > 6)
-	{
-		printf("You have either given too many arguments or too few\n");
-		return (1);
-	}
-	argument_converter(argv_int, argv, argc);
-	if (argv_int[0] == -1)
-		return (1);
-	int i;
-	i = 0;
-	while (i < 5)
-	printf("This is argv_int[%d]")
-	return (0);
+	return (c >= '0' && c <= '9');
 }

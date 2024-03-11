@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 04:29:06 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/11 11:35:33 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,10 @@ typedef struct s_data
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
 }				t_data;
+
+int		ft_isdigit(int c);
+int		ft_atoi(const char *str);
+void	argument_converter(int argv_int[5], char **argv, int argc);
+size_t	ft_strlen(const char *s);
 
 #endif
