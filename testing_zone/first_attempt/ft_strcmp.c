@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 13:44:56 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/20 10:50:22 by akuburas          #+#    #+#             */
+/*   Updated: 2024/03/11 13:34:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int	argv_int[5];
-	p_thread
+	size_t	i;
 
-	if (argc < 5 || argc > 6)
+	i = 0;
+	while (i[s1] || i[s2])
 	{
-		printf("You have either given too many arguments or too few\n");
-		return (1);
+		if (i[s1] != i[s2])
+			return (i[s1] - i[s2]);
+		i++;
 	}
-	argument_converter(argv_int, argv, argc);
-	if (argv_int[0] == -1)
-		return (1);
-	
 	return (0);
 }

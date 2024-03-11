@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 11:35:33 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:48:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_data
 	int				philo_num;
 	int				*philo_died;
 	suseconds_t		initial_time;
+	suseconds_t		time_before_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
@@ -33,5 +34,6 @@ int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 void	argument_converter(int argv_int[5], char **argv, int argc);
 size_t	ft_strlen(const char *s);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif
