@@ -6,19 +6,27 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/07 02:27:38 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/11 04:29:06 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#ifndef PHILO_H
+# define PHILO_H
 
-typedef struct	s_data
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/time.h>
+
+typedef struct s_data
 {
-	int			philo_amount;
-	int			philo_num;
-	int			*philo_died;
-	pthread_mutex_t	*fork_mutexs;
+	int				philo_num;
+	int				*philo_died;
+	suseconds_t		initial_time;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*monitor;
 }				t_data;
+
+#endif
