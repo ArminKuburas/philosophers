@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 10:07:14 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:50:35 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ int	use_malloc(t_pointers *data, int argv_int)
 		free(data->monitors);
 		return (1);
 	}
+	data->philo_died = malloc(sizeof(int) * argv_int);
+	if (data->philo_died == NULL)
+	{
+		printf("Malloc failed\n");
+		free(data->philosophers);
+		free(data->forks);
+		free(data->monitors);
+		free(data->philo_wait_start);
+		return (1);
+	}
+	data->philo_data = malloc(sizeof(t_philo_data) * argv_int);
+	if (data->philo_data == NULL)
+	{
+		printf("Malloc failed\n");
+		free(data->philosophers);
+		free(data->forks);
+		free(data->monitors);
+		free(data->philo_wait_start);
+		free(data->philo_died);
+		return (1);
+	}
 	return (0);
 }
 
@@ -72,7 +93,6 @@ int	mutex_init(t_pointers *data, int *argv_int)
 void	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
-	t_philo_data	*philo_data;
 
 	philo_data = malloc(sizeof(t_philo_data) * argv_int[0]);
 	if (philo_data == NULL)
