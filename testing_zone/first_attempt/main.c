@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 05:10:41 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 10:07:14 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,56 @@ int	use_malloc(t_pointers *data, int argv_int)
 		return (1);
 	}
 	return (0);
+}
+
+int	mutex_init(t_pointers *data, int *argv_int)
+{
+	int	i;
+
+	i = 0;
+	while (i < argv_int[0])
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			printf("Mutex init failed\n");
+			return (1);
+		}
+		if (pthread_mutex_init(&data->monitors[i], NULL) != 0)
+		{
+			printf("Mutex init failed\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	roundtable(t_pointers *data, int *argv_int)
+{
+	int				i;
+	t_philo_data	*philo_data;
+
+	philo_data = malloc(sizeof(t_philo_data) * argv_int[0]);
+	if (philo_data == NULL)
+	{
+		printf("Malloc failed\n");
+		return ;
+	}
+	if (mutex_init(data, argv_int) == 1)
+	{
+		free(philo_data);
+		return ;
+	}
+	set_up_philo_data(philo_data, data, argv_int);
+	create_threads(data, philo_data, argv_int);
+	monitoring(data, argv_int);
+	i = 0;
+	while (i < argv_int[0])
+	{
+		pthread_join(data->philosophers[i], NULL);
+		i++;
+	}
+	free(philo_data);
 }
 
 int	main(int argc, char **argv)

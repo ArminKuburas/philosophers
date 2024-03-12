@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 08:59:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 04:56:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 06:14:32 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	check_integers(int argv_int[5])
 		{
 			printf("One or several arguments are invalid integers\n");
 			argv_int[0] = -1;
+			return ;
 		}
 		i++;
 	}
