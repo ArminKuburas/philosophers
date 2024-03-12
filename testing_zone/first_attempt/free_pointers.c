@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:33:59 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 15:33:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:09:07 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	free_pointer_data(t_pointers *data, int error_val)
 		free(data->philosophers);
 	if (error_val == 1)
 	{
-		printf("Malloc Failed");
+		printf("Malloc Failed\n");
 		return (1);
 	}
 	if (error_val == 2)
 	{
-		printf("Mutex init failed");
+		printf("Mutex init failed\n");
 		return (1);
 	}
 	return (0);
