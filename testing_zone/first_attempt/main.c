@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 11:50:35 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:36:31 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,22 @@ int	use_malloc(t_pointers *data, int argv_int)
 {
 	data->philosophers = malloc(sizeof(pthread_t) * argv_int);
 	if (data->philosophers == NULL)
-	{
-		printf("Malloc failed\n");
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	data->forks = malloc(sizeof(pthread_mutex_t) * argv_int);
 	if (data->forks == NULL)
-	{
-		printf("Malloc failed\n");
-		free(data->philosophers);
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	data->monitors = malloc(sizeof(pthread_mutex_t) * argv_int);
 	if (data->monitors == NULL)
-	{
-		printf("Malloc failed\n");
-		free(data->philosophers);
-		free(data->forks);
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	data->philo_wait_start = malloc(sizeof(suseconds_t) * argv_int);
 	if (data->philo_wait_start == NULL)
-	{
-		printf("Malloc failed\n");
-		free(data->philosophers);
-		free(data->forks);
-		free(data->monitors);
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	data->philo_died = malloc(sizeof(int) * argv_int);
 	if (data->philo_died == NULL)
-	{
-		printf("Malloc failed\n");
-		free(data->philosophers);
-		free(data->forks);
-		free(data->monitors);
-		free(data->philo_wait_start);
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	data->philo_data = malloc(sizeof(t_philo_data) * argv_int);
 	if (data->philo_data == NULL)
-	{
-		printf("Malloc failed\n");
-		free(data->philosophers);
-		free(data->forks);
-		free(data->monitors);
-		free(data->philo_wait_start);
-		free(data->philo_died);
-		return (1);
-	}
+		return (free_pointer_data(data, 1));
 	return (0);
 }
 
@@ -90,31 +57,22 @@ int	mutex_init(t_pointers *data, int *argv_int)
 	return (0);
 }
 
-void	roundtable(t_pointers *data, int *argv_int)
+int	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
 
-	philo_data = malloc(sizeof(t_philo_data) * argv_int[0]);
-	if (philo_data == NULL)
-	{
-		printf("Malloc failed\n");
-		return ;
-	}
 	if (mutex_init(data, argv_int) == 1)
-	{
-		free(philo_data);
-		return ;
-	}
-	set_up_philo_data(philo_data, data, argv_int);
-	create_threads(data, philo_data, argv_int);
-	monitoring(data, argv_int);
+		return (free_pointer_data(data, 2));
+	// set_up_philo_data(data, argv_int);
+	// create_threads(data, argv_int);
+	// monitoring(data, argv_int);
 	i = 0;
 	while (i < argv_int[0])
 	{
 		pthread_join(data->philosophers[i], NULL);
 		i++;
 	}
-	free(philo_data);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -122,6 +80,7 @@ int	main(int argc, char **argv)
 	int				argv_int[5];
 	t_pointers		data;
 
+	data = (t_pointers){};
 	if (argc < 5 || argc > 6)
 	{
 		printf("You have either given too many arguments or too few\n");
@@ -148,9 +107,5 @@ int	main(int argc, char **argv)
 		printf("argv_int[%d] = %d\n", i, argv_int[i]);
 		i++;
 	}
-	free(data.philosophers);
-	free(data.forks);
-	free(data.monitors);
-	free(data.philo_wait_start);
-	return (0);
+	return (free_pointer_data(&data, 0));
 }
