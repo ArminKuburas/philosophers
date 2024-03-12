@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 13:48:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 04:39:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,24 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct s_data
+typedef struct s_philo
 {
 	int				philo_num;
 	int				*philo_died;
 	suseconds_t		initial_time;
-	suseconds_t		time_before_eat;
+	suseconds_t		*time_before_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
-}				t_data;
+}				t_philo;
+
+typedef struct s_pointers
+{
+	pthread_t		*philosophers;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*monitors;
+	suseconds_t		*philo_wait_start;
+}				t_pointers;
 
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);

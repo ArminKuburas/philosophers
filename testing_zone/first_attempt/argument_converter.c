@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 08:59:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/11 13:43:00 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/12 04:56:42 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	check_integers(int argv_int[5])
 	{
 		if (argv_int[i] <= 0)
 		{
-			printf("One or several arguments are larger than INT_MAX\n");
+			printf("One or several arguments are invalid integers\n");
 			argv_int[0] = -1;
 		}
 		i++;
