@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 16:08:49 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/13 09:12:20 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,39 @@ int	mutex_init(t_pointers *data, int *argv_int)
 	return (0);
 }
 
+void	set_up_philo_data(t_pointers *data, int *argv_int)
+{
+	int			i;
+	suseconds_t	time;
+
+	i = 0;
+	if (gettimeofday(&time, NULL) == -1)
+		return (1);
+	while (i < argv_int[0])
+	{
+		data->philo_data[i].philo_num = i + 1;
+		data->philo_data[i].time_to_eat = argv_int[2];
+		data->philo_data[i].time_to_sleep = argv_int[3];
+		data->philo_data[i].philo_eat_amount = argv_int[4];
+		data->philo_data[i].philo_died = &data->philo_died[i];
+		data->philo_data[i].initial_time = time;
+		data->philo_data[i].time_before_eat = &data->philo_wait_start[i];
+		data->philo_data[i].left_fork = &data->forks[i];
+		data->philo_data[i].right_fork = &data->forks[(i + 1) % argv_int[0]];
+		data->philo_data[i].monitor = &data->monitors[i];
+		i++;
+	}
+	return (0);
+}
+
 int	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
 
 	if (mutex_init(data, argv_int) == 1)
 		return (free_pointer_data(data, 2));
-	// set_up_philo_data(data, argv_int);
+	if (set_up_philo_data(data, argv_int) == 1)
+		return (free_pointer_data(data, 3))
 	// create_threads(data, argv_int);
 	// monitoring(data, argv_int);
 	i = 0;
