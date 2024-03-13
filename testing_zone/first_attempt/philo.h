@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/13 08:27:26 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:45:10 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	argument_converter(int argv_int[5], char **argv, int argc);
 size_t	ft_strlen(const char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		free_pointer_data(t_pointers *data, int error_val);
+void	*thread_func(void *param);
 
 #endif
