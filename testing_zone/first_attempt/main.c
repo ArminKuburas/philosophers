@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/13 09:12:20 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/13 09:17:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,21 @@ void	set_up_philo_data(t_pointers *data, int *argv_int)
 	return (0);
 }
 
+int	create_threads(t_pointers *data, int *argv_int)
+{
+	int	i;
+
+	i = 0;
+	while (i < argv_int[0])
+	{
+		if (pthread_create(&data->philosophers[i], NULL,
+				philosopher, &data->philo_data[i]) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
@@ -89,8 +104,9 @@ int	roundtable(t_pointers *data, int *argv_int)
 	if (mutex_init(data, argv_int) == 1)
 		return (free_pointer_data(data, 2));
 	if (set_up_philo_data(data, argv_int) == 1)
-		return (free_pointer_data(data, 3))
-	// create_threads(data, argv_int);
+		return (free_pointer_data(data, 3));
+	if (create_threads(data, argv_int) == 1)
+		return (free_pointer_data(data, 4));
 	// monitoring(data, argv_int);
 	i = 0;
 	while (i < argv_int[0])
