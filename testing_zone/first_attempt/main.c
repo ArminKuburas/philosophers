@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/13 10:18:35 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:39:21 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		data->philo_data[i].philo_died = &data->philo_died[i];
 		data->philo_data[i].initial_time = time;
 		data->philo_data[i].time_before_eat = &data->philo_wait_start[i];
+		data->philo_data[i].time_before_eat.tv_usec = time.tv_usec;
+		data->philo_data[i].time_before_eat.tv_sec = time.tv_sec;
 		data->philo_data[i].left_fork = &data->forks[i];
 		data->philo_data[i].right_fork = &data->forks[(i + 1) % argv_int[0]];
 		data->philo_data[i].monitor = &data->monitors[i];
@@ -101,15 +103,15 @@ int	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
 
+	if (mutex_init(data, argv_int) == 1)
+		return (free_pointer_data(data, 2));
+	if (set_up_philo_data(data, argv_int) == 1)
+		return (free_pointer_data(data, 3));
 	if (argv_int[0] == 1)
 	{
 		handle_single_philo(argv_int);
 		return (0);
 	}
-	if (mutex_init(data, argv_int) == 1)
-		return (free_pointer_data(data, 2));
-	if (set_up_philo_data(data, argv_int) == 1)
-		return (free_pointer_data(data, 3));
 	if (create_threads(data, argv_int) == 1)
 		return (free_pointer_data(data, 4));
 	// monitoring(data, argv_int);
