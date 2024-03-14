@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/13 12:45:10 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:39:38 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_philo_data
 	int				time_to_sleep;
 	int				philo_eat_amount;
 	int				*philo_died;
-	suseconds_t		initial_time;
-	suseconds_t		*time_before_eat;
+	struct timeval	initial_time;
+	struct timeval	*time_before_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
@@ -39,7 +39,7 @@ typedef struct s_pointers
 	pthread_t		*philosophers;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*monitors;
-	suseconds_t		*philo_wait_start;
+	struct timeval	*philo_wait_start;
 	int				*philo_died;
 	t_philo_data	*philo_data;
 }				t_pointers;
@@ -51,5 +51,6 @@ size_t	ft_strlen(const char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		free_pointer_data(t_pointers *data, int error_val);
 void	*thread_func(void *param);
+int	time_difference(struct timeval *initial_time, struct timeval current_time);
 
 #endif

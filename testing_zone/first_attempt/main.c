@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/14 08:39:21 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:49:20 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	use_malloc(t_pointers *data, int argv_int)
 	data->monitors = malloc(sizeof(pthread_mutex_t) * argv_int);
 	if (data->monitors == NULL)
 		return (free_pointer_data(data, 1));
-	data->philo_wait_start = malloc(sizeof(suseconds_t) * argv_int);
+	data->philo_wait_start = malloc(sizeof(struct timeval) * argv_int);
 	if (data->philo_wait_start == NULL)
 		return (free_pointer_data(data, 1));
 	data->philo_died = malloc(sizeof(int) * argv_int);
@@ -59,8 +59,8 @@ int	mutex_init(t_pointers *data, int *argv_int)
 
 int	set_up_philo_data(t_pointers *data, int *argv_int)
 {
-	int			i;
-	suseconds_t	time;
+	int				i;
+	struct timeval	time;
 
 	i = 0;
 	if (gettimeofday(&time, NULL) == -1)
@@ -74,7 +74,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		data->philo_data[i].philo_died = &data->philo_died[i];
 		data->philo_data[i].initial_time = time;
 		data->philo_data[i].time_before_eat = &data->philo_wait_start[i];
-		data->philo_data[i].time_before_eat.tv_usec = time.tv_usec;
+		data->philo_data[i].time_before_eat->tv_usec = time.tv_usec;
 		data->philo_data[i].time_before_eat.tv_sec = time.tv_sec;
 		data->philo_data[i].left_fork = &data->forks[i];
 		data->philo_data[i].right_fork = &data->forks[(i + 1) % argv_int[0]];
@@ -114,7 +114,7 @@ int	roundtable(t_pointers *data, int *argv_int)
 	}
 	if (create_threads(data, argv_int) == 1)
 		return (free_pointer_data(data, 4));
-	// monitoring(data, argv_int);
+	monitoring(data, argv_int);
 	i = 0;
 	while (i < argv_int[0])
 	{
@@ -140,7 +140,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (use_malloc(&data, argv_int[0]) == 1)
 		return (1);
-	//roundtable(&data, argv_int);
+	roundtable(&data, argv_int);
 	int i = 0;
 	while (i < argv_int[0])
 	{

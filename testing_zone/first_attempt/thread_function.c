@@ -6,11 +6,77 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/14 08:51:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:53:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	philo_dead(t_philo_data *data, int type)
+{
+	pthread_mutex_lock(data->monitor);
+	if (type == 1 && *data->philo_died == 1)
+	{
+		pthread_mutex_unlock(data->monitor);
+		return (1);
+	}
+	if (type == 2 && *data->philo_died == 1)
+	{
+		pthread_mutex_unlock(data->monitor);
+		pthread_mutex_unlock(data->left_fork);
+		return (1);
+	}
+	if (type == 3 && *data->philo_died == 1)
+	{
+		pthread_mutex_unlock(data->monitor);
+		pthread_mutex_unlock(data->left_fork);
+		pthread_mutex_unlock(data->right_fork);
+		return (1);
+	}
+	if (type == 3)
+		gettimeofday(data->time_before_eat);
+	pthread_mutex_unlock(data->monitor);
+	return (0);
+}
+
+void	thread_printer(char *str, t_philo_data *data)
+{
+	int				elapsed_time;
+	struct timeval	current_time;
+
+	gettimeofday(&current_time, NULL);
+	elapsed_time = time_difference(data->initial_time, current_time);
+	printf("%i %i %s", elapsed_time, data->philo_num, str);
+
+}
+
+void	thread_loop_function(t_philo_data *data)
+{
+	while (1 && data->philo_eat_amount != 0)
+	{
+		if (philo_dead(data, 1) == 1)
+			break ;
+		thread_printer("is thinking\n", data);
+		pthread_mutex_lock(data->left_fork);
+		if (philo_dead(data, 2) == 1)
+			break ;
+		thread_printer("has taken a fork\n", data);
+		pthread_mutex_lock(data->right_fork);
+		if (philo_dead(data, 3) == 1)
+			break ;
+		thread_printer("has taken a fork\n", data);
+		thread_printer("is eating\n", data);
+		usleep(data->time_to_eat * 1000);
+		pthread_mutex_unlock(data->left_fork);
+		pthread_mutex_unlock(data->right_fork);
+		if (philo_dead(data, 1) == 1)
+			break ;
+		if (data->philo_eat_amount != -1)
+			data->philo_eat_amount--;
+		thread_printer("is sleeping\n", data);
+		usleep(data->time_to_sleep * 1000);
+	}
+}
 
 void	*thread_func(void *param)
 {
@@ -18,66 +84,7 @@ void	*thread_func(void *param)
 
 	data = param;
 	if (data->philo_num % 2 == 1)
-	{
-		if (usleep(10) != 0)
-		{
-			if (printf("Usleep failed\n") <= 0)
-				return ;
-			return ;
-		}
-	}
-	while(1 && data->philo_eat_amount != 0)
-	{
-		if (pthread_mutex_lock(data->monitor) != 0)
-		{
-			printf("Mutex lock failed\n");
-			return ;
-		}
-		if (*data->philo_died == 1)
-		{
-			if (pthread_mutex_unlock(data->monitor) != 0)
-			{
-				printf("Mutex unlock failed\n");
-				return ;
-			}
-			break ;
-		}
-		pthread_mutex_unlock(data->monitor);
-		printf("%d is thinking\n", data->philo_num);
-		pthread_mutex_lock(data->left_fork);
-		pthread_mutex_lock(data->monitor);
-		if (*data->philo_died == 1)
-		{
-			pthread_mutex_unlock(data->monitor);
-			pthread_mutex_unlock(data->left_fork);
-			break ;
-		}
-		printf("%d has taken a fork\n", data->philo_num);
-		pthread_mutex_lock(data->right_fork);
-		pthread_mutex_lock(data->monitor);
-		if (*data->philo_died == 1)
-		{
-			pthread_mutex_unlock(data->monitor);
-			pthread_mutex_unlock(data->left_fork);
-			pthread_mutex_unlock(data->right_fork);
-			break ;
-		}
-		printf("%d has taken a fork\n", data->philo_num);
-		*data->time_before_eat = get_time();
-		pthread_mutex_unlock(data->monitor);
-		printf("%d is eating\n", data->philo_num);
-		usleep(data->time_to_eat);
-		pthread_mutex_unlock(data->left_fork);
-		pthread_mutex_unlock(data->right_fork);
-		pthread_mutex_lock(data->monitor);
-		if (*data->philo_died == 1)
-		{
-			pthread_mutex_unlock(data->monitor);
-			break ;
-		}
-		pthread_mutex_unlock(data->monitor);
-		if (data->philo_eat_amount != -1)
-			data->philo_eat_amount--;
-		printf("%d is sleeping\n", data->philo_num);
-	}
+		usleep(10);
+	thread_loop_function(data);
+	
 }
