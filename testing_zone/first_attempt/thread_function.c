@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/13 21:41:05 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:51:32 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,28 @@ void	*thread_func(void *param)
 
 	data = param;
 	if (data->philo_num % 2 == 1)
-		usleep(10);
+	{
+		if (usleep(10) != 0)
+		{
+			if (printf("Usleep failed\n") <= 0)
+				return ;
+			return ;
+		}
+	}
 	while(1 && data->philo_eat_amount != 0)
 	{
-		pthread_mutex_lock(data->monitor)
+		if (pthread_mutex_lock(data->monitor) != 0)
+		{
+			printf("Mutex lock failed\n");
+			return ;
+		}
 		if (*data->philo_died == 1)
 		{
-			pthread_mutex_unlock(data->monitor);
+			if (pthread_mutex_unlock(data->monitor) != 0)
+			{
+				printf("Mutex unlock failed\n");
+				return ;
+			}
 			break ;
 		}
 		pthread_mutex_unlock(data->monitor);
