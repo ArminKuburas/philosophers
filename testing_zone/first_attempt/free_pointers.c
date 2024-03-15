@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:33:59 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/12 16:09:07 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:14:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	free_pointer_data(t_pointers *data, int error_val)
 		free(data->philo_wait_start);
 	if (data->philosophers != NULL)
 		free(data->philosophers);
+	if (data->philo_eat_amount != NULL)
+		free(data->philo_eat_amount);
+	//if (error_val != 0)
+	//	error_printer(error_val);
 	if (error_val == 1)
 	{
 		printf("Malloc Failed\n");

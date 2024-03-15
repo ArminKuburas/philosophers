@@ -6,11 +6,18 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/14 14:53:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:24:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	monitor_data_handler(t_philo_data *data)
+{
+	if (data->philo_eat_amount != -1)
+		*data->philo_eat_amount -= 1;
+	gettimeofday(&data->time_before_eat, NULL);
+}
 
 int	philo_dead(t_philo_data *data, int type)
 {
@@ -34,25 +41,24 @@ int	philo_dead(t_philo_data *data, int type)
 		return (1);
 	}
 	if (type == 3)
-		gettimeofday(data->time_before_eat);
+		monitor_data_handler(data);
 	pthread_mutex_unlock(data->monitor);
 	return (0);
 }
 
 void	thread_printer(char *str, t_philo_data *data)
 {
-	int				elapsed_time;
+	long			elapsed_time;
 	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
-	elapsed_time = time_difference(data->initial_time, current_time);
-	printf("%i %i %s", elapsed_time, data->philo_num, str);
-
+	elapsed_time = time_diff(data->initial_time, current_time);
+	printf("%ld %d %s", elapsed_time, data->philo_num, str);
 }
 
 void	thread_loop_function(t_philo_data *data)
 {
-	while (1 && data->philo_eat_amount != 0)
+	while (1)
 	{
 		if (philo_dead(data, 1) == 1)
 			break ;
