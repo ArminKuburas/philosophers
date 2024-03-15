@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/15 10:13:07 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:01:43 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	use_malloc(t_pointers *data, int argv_int)
 		return (free_pointer_data(data, 1));
 	data->philo_eat_amount = malloc(sizeof(int) * argv_int);
 	if (data->philo_eat_amount == NULL)
+		return (free_pointer_data(data, 1));
+	data->eaten_enough = malloc(sizeof(int) * argv_int);
+	if (data->eaten_enough == NULL)
 		return (free_pointer_data(data, 1));
 	return (0);
 }
@@ -68,6 +71,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 	i = 0;
 	if (gettimeofday(&time, NULL) == -1)
 		return (1);
+	ft_memset(data->eaten_enough, argv_int[0] * sizeof(int));
 	while (i < argv_int[0])
 	{
 		data->philo_data[i].philo_num = i + 1;

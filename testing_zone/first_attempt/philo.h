@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/15 10:11:43 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:59:51 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_pointers
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*monitors;
 	int				*philo_eat_amount;
+	int				*eaten_enough;
 	struct timeval	*philo_wait_start;
 	int				*philo_died;
 	t_philo_data	*philo_data;
@@ -52,6 +53,7 @@ size_t	ft_strlen(const char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		free_pointer_data(t_pointers *data, int error_val);
 void	*thread_func(void *param);
-int	time_difference(struct timeval *initial_time, struct timeval current_time);
+long	time_diff(struct timeval *initial_time, struct timeval current_time);
+void	*ft_memset(void *b, int c, size_t len);
 
 #endif

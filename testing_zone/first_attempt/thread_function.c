@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/15 10:24:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:42:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	monitor_data_handler(t_philo_data *data)
 {
-	if (data->philo_eat_amount != -1)
+	if (data->philo_eat_amount != -1 && data->philo_eat_amount > 0)
 		*data->philo_eat_amount -= 1;
 	gettimeofday(&data->time_before_eat, NULL);
 }
