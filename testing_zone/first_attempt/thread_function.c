@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 23:11:27 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:25:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	*thread_func(void *param)
 	t_philo_data	*data;
 
 	data = param;
-	if (data->philo_num % 2 == 1)
+	if (data->philo_num % 2 == 0)
 		usleep(10);
 	thread_loop_function(data);
 	return (NULL);
