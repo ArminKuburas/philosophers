@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/15 12:01:43 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:18:19 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	use_malloc(t_pointers *data, int argv_int)
 		return (free_pointer_data(data, 1));
 	data->eaten_enough = malloc(sizeof(int) * argv_int);
 	if (data->eaten_enough == NULL)
-		return (free_pointer_data(data, 1));
+		return (free_pointer_data(data, 1)); 
 	return (0);
 }
 
