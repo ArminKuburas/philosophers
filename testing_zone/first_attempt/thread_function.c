@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/15 11:42:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:11:27 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	monitor_data_handler(t_philo_data *data)
 {
-	if (data->philo_eat_amount != -1 && data->philo_eat_amount > 0)
+	if (*data->philo_eat_amount != -1 && *data->philo_eat_amount > 0)
 		*data->philo_eat_amount -= 1;
-	gettimeofday(&data->time_before_eat, NULL);
+	gettimeofday(data->time_before_eat, NULL);
 }
 
 int	philo_dead(t_philo_data *data, int type)
@@ -77,8 +77,8 @@ void	thread_loop_function(t_philo_data *data)
 		pthread_mutex_unlock(data->right_fork);
 		if (philo_dead(data, 1) == 1)
 			break ;
-		if (data->philo_eat_amount != -1)
-			data->philo_eat_amount--;
+		if (*data->philo_eat_amount != -1)
+			*data->philo_eat_amount -= 1;
 		thread_printer("is sleeping\n", data);
 		usleep(data->time_to_sleep * 1000);
 	}
@@ -92,5 +92,5 @@ void	*thread_func(void *param)
 	if (data->philo_num % 2 == 1)
 		usleep(10);
 	thread_loop_function(data);
-	
+	return (NULL);
 }

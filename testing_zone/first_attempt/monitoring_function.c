@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:47:18 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 21:52:23 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:06:03 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,19 @@ void	check_starvation(t_pointers *data, int timeToDie, int i, int *setToDead)
 	struct timeval	crnt_time;
 
 	gettimeofday(&crnt_time, NULL);
-	if (time_diff(data->philo_last_eat[i], crnt_time) >= timeToDie)
+	if (time_diff(data->philo_wait_start[i], crnt_time) >= timeToDie)
 	{
 		*setToDead = 1;
 		data->philo_died[i] = 1;
-		printf("%ld %d died\n", time_diff(data->start_time, crnt_time), i + 1);
+		printf("%ld %d died\n", time_diff(data->philo_wait_start[i],
+				crnt_time), i + 1);
 	}
 }
 
 void	check_if_eaten(t_pointers *data, int amount, int i, int *setToDead)
 {
 	data->eaten_enough[i] = 1;
-	if (everyone_is_fed(data->eaten_enough, argv_int[0]) == 1)
+	if (everyone_is_fed(data->eaten_enough, amount) == 1)
 	{
 		*setToDead = 1;
 		data->philo_died[i] = 1;
@@ -80,7 +81,7 @@ void	monitoring(t_pointers *data, int *argv_int)
 		else if (data->philo_eat_amount[i] == 0)
 			check_if_eaten(data, argv_int[0], i, &set_to_dead);
 		if (data->philo_died[i] == 0)
-			check_if_starved(data, argv_int[1], i, &set_to_dead);
+			check_starvation(data, argv_int[1], i, &set_to_dead);
 		pthread_mutex_unlock(&data->monitors[i]);
 		if (check_if_everyone_is_dead(data->philo_died, argv_int[0]) == 1)
 			return ;

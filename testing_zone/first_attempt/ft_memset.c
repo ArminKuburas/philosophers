@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:19:01 by akuburas          #+#    #+#             */
-/*   Updated: 2023/10/30 09:14:51 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:59:21 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
 void	*ft_memset(void *b, int c, size_t len)
 {

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 22:18:19 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:59:07 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 	i = 0;
 	if (gettimeofday(&time, NULL) == -1)
 		return (1);
-	ft_memset(data->eaten_enough, argv_int[0] * sizeof(int));
+	ft_memset(data->eaten_enough, 0, argv_int[0] * sizeof(int));
 	while (i < argv_int[0])
 	{
 		data->philo_data[i].philo_num = i + 1;
@@ -83,7 +83,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		data->philo_data[i].initial_time = time;
 		data->philo_data[i].time_before_eat = &data->philo_wait_start[i];
 		data->philo_data[i].time_before_eat->tv_usec = time.tv_usec;
-		data->philo_data[i].time_before_eat.tv_sec = time.tv_sec;
+		data->philo_data[i].time_before_eat->tv_sec = time.tv_sec;
 		data->philo_data[i].left_fork = &data->forks[i];
 		data->philo_data[i].right_fork = &data->forks[(i + 1) % argv_int[0]];
 		data->philo_data[i].monitor = &data->monitors[i];
@@ -107,6 +107,40 @@ int	create_threads(t_pointers *data, int *argv_int)
 	return (0);
 }
 
+/* void	*one_thread(void *param)
+{
+	int	*philo_data;
+
+	philo_data = param;
+	
+
+}
+
+void	handle_single_philo(int *argv_int)
+{
+	pthread_t		philosopher;
+
+	if (pthread_create(&philosopher, NULL, one_thread, argv_int) != 0)
+	{
+		printf("Thread creation failed\n");
+		return ;
+	}
+	pthread_join(philosopher, NULL);
+} */
+
+void	close_mutexes(t_pointers *data, int *argv_int)
+{
+	int	i;
+
+	i = 0;
+	while (i < argv_int[0])
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->monitors[i]);
+		i++;
+	}
+}
+
 int	roundtable(t_pointers *data, int *argv_int)
 {
 	int				i;
@@ -115,11 +149,11 @@ int	roundtable(t_pointers *data, int *argv_int)
 		return (free_pointer_data(data, 2));
 	if (set_up_philo_data(data, argv_int) == 1)
 		return (free_pointer_data(data, 3));
-	if (argv_int[0] == 1)
+	/*if (argv_int[0] == 1)
 	{
 		handle_single_philo(argv_int);
 		return (0);
-	}
+	}*/
 	if (create_threads(data, argv_int) == 1)
 		return (free_pointer_data(data, 4));
 	monitoring(data, argv_int);
@@ -129,6 +163,7 @@ int	roundtable(t_pointers *data, int *argv_int)
 		pthread_join(data->philosophers[i], NULL);
 		i++;
 	}
+	close_mutexes(data, argv_int);
 	return (0);
 }
 

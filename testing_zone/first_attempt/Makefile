@@ -11,7 +11,7 @@ SRCS = main.c \
 		ft_memset.c \
 		ft_strcmp.c \
 		ft_strlen.c \
-		monitoring_functions.c \
+		monitoring_function.c \
 		philo_helper_functions.c \
 		thread_function.c \
 
