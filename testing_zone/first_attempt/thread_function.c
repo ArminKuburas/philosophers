@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/17 10:45:58 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:56:18 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	thread_loop_function(t_philo_data *data)
 	{
 		if (philo_dead(data, 1) == 1)
 			break ;
-		thread_printer("is thinking\n", data);
 		pthread_mutex_lock(data->left_fork);
 		if (philo_dead(data, 2) == 1)
 			break ;
@@ -78,6 +77,7 @@ void	thread_loop_function(t_philo_data *data)
 		if (philo_dead(data, 1) == 1)
 			break ;
 		thread_printer("is sleeping\n", data);
+		thread_printer("is thinking\n", data);
 		usleep(data->time_to_sleep * 1000);
 	}
 }
@@ -86,7 +86,12 @@ void	*thread_func(void *param)
 {
 	t_philo_data	*data;
 
-	data = param;
+	data = (t_philo_data *)param;
+	if (data->left_fork == data->right_fork)
+	{
+		thread_printer("has taken a fork\n", data);
+		return (NULL);
+	}
 	if (data->philo_num % 2 == 0)
 		usleep(10);
 	thread_loop_function(data);

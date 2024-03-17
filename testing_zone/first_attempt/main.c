@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 22:59:07 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:57:12 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,27 +107,6 @@ int	create_threads(t_pointers *data, int *argv_int)
 	return (0);
 }
 
-/* void	*one_thread(void *param)
-{
-	int	*philo_data;
-
-	philo_data = param;
-	
-
-}
-
-void	handle_single_philo(int *argv_int)
-{
-	pthread_t		philosopher;
-
-	if (pthread_create(&philosopher, NULL, one_thread, argv_int) != 0)
-	{
-		printf("Thread creation failed\n");
-		return ;
-	}
-	pthread_join(philosopher, NULL);
-} */
-
 void	close_mutexes(t_pointers *data, int *argv_int)
 {
 	int	i;
@@ -149,11 +128,6 @@ int	roundtable(t_pointers *data, int *argv_int)
 		return (free_pointer_data(data, 2));
 	if (set_up_philo_data(data, argv_int) == 1)
 		return (free_pointer_data(data, 3));
-	/*if (argv_int[0] == 1)
-	{
-		handle_single_philo(argv_int);
-		return (0);
-	}*/
 	if (create_threads(data, argv_int) == 1)
 		return (free_pointer_data(data, 4));
 	monitoring(data, argv_int);
@@ -184,20 +158,5 @@ int	main(int argc, char **argv)
 	if (use_malloc(&data, argv_int[0]) == 1)
 		return (1);
 	roundtable(&data, argv_int);
-	int i = 0;
-	while (i < argv_int[0])
-	{
-		printf("philosophers[%d] = %p\n", i, &data.philosophers[i]);
-		printf("forks[%d] = %p\n", i, &data.forks[i]);
-		printf("monitors[%d] = %p\n", i, &data.monitors[i]);
-		printf("philo_wait_start[%d] = %p\n", i, &data.philo_wait_start[i]);
-		i++;
-	}
-	i = 0;
-	while (i < argc - 1)
-	{
-		printf("argv_int[%d] = %d\n", i, argv_int[i]);
-		i++;
-	}
 	return (free_pointer_data(&data, 0));
 }
