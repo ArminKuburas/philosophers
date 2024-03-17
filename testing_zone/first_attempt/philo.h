@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 23:05:51 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:37:31 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo_data
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
-
+	pthread_mutex_t	*write_lock;
 }				t_philo_data;
 
 typedef struct s_pointers
@@ -39,6 +39,7 @@ typedef struct s_pointers
 	pthread_t		*philosophers;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*monitors;
+	pthread_mutex_t	write_lock;
 	int				*philo_eat_amount;
 	int				*eaten_enough;
 	struct timeval	*philo_wait_start;

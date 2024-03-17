@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:47:18 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/16 23:06:03 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:44:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	check_starvation(t_pointers *data, int timeToDie, int i, int *setToDead)
 	{
 		*setToDead = 1;
 		data->philo_died[i] = 1;
+		pthread_mutex_lock(&data->write_lock);
 		printf("%ld %d died\n", time_diff(data->philo_wait_start[i],
 				crnt_time), i + 1);
+		pthread_mutex_unlock(&data->write_lock);
 	}
 }
 

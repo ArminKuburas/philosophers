@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
+SANITIZE = -fsanitize=address
 SRCS = main.c \
 		argument_converter.c \
 		free_pointers.c \
@@ -21,7 +21,8 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
+sanitize : $(OBJS)
+	$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) -o $(NAME)
 clean :
 	rm -rf $(OBJS)
 fclean : clean

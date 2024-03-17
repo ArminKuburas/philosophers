@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/17 13:57:12 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:44:39 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int	mutex_init(t_pointers *data, int *argv_int)
 		}
 		i++;
 	}
+	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
+	{
+		printf("Mutex init failed\n");
+		return (1);
+	}
 	return (0);
 }
 
@@ -69,8 +74,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 	struct timeval	time;
 
 	i = 0;
-	if (gettimeofday(&time, NULL) == -1)
-		return (1);
+	gettimeofday(&time, NULL);
 	ft_memset(data->eaten_enough, 0, argv_int[0] * sizeof(int));
 	while (i < argv_int[0])
 	{
@@ -87,6 +91,7 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		data->philo_data[i].left_fork = &data->forks[i];
 		data->philo_data[i].right_fork = &data->forks[(i + 1) % argv_int[0]];
 		data->philo_data[i].monitor = &data->monitors[i];
+		data->philo_data[i].write_lock = &data->write_lock;
 		i++;
 	}
 	return (0);
@@ -118,6 +123,7 @@ void	close_mutexes(t_pointers *data, int *argv_int)
 		pthread_mutex_destroy(&data->monitors[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&data->write_lock);
 }
 
 int	roundtable(t_pointers *data, int *argv_int)

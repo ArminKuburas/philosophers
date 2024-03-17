@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/17 13:56:18 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:45:02 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ int	philo_dead(t_philo_data *data, int type)
 	return (0);
 }
 
-void	thread_printer(char *str, t_philo_data *data)
+void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock)
 {
 	long			elapsed_time;
 	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
 	elapsed_time = time_diff(data->initial_time, current_time);
+	pthread_mutex_lock(w_lock);
 	printf("%ld %d %s", elapsed_time, data->philo_num, str);
+	pthread_mutex_unlock(w_lock);
 }
 
 void	thread_loop_function(t_philo_data *data)
@@ -65,19 +67,19 @@ void	thread_loop_function(t_philo_data *data)
 		pthread_mutex_lock(data->left_fork);
 		if (philo_dead(data, 2) == 1)
 			break ;
-		thread_printer("has taken a fork\n", data);
+		thread_printer("has taken a fork\n", data, data->write_lock);
 		pthread_mutex_lock(data->right_fork);
 		if (philo_dead(data, 3) == 1)
 			break ;
-		thread_printer("has taken a fork\n", data);
-		thread_printer("is eating\n", data);
+		thread_printer("has taken a fork\n", data, data->write_lock);
+		thread_printer("is eating\n", data, data->write_lock);
 		usleep(data->time_to_eat * 1000);
 		pthread_mutex_unlock(data->left_fork);
 		pthread_mutex_unlock(data->right_fork);
 		if (philo_dead(data, 1) == 1)
 			break ;
-		thread_printer("is sleeping\n", data);
-		thread_printer("is thinking\n", data);
+		thread_printer("is sleeping\n", data, data->write_lock);
+		thread_printer("is thinking\n", data, data->write_lock);
 		usleep(data->time_to_sleep * 1000);
 	}
 }
@@ -89,7 +91,7 @@ void	*thread_func(void *param)
 	data = (t_philo_data *)param;
 	if (data->left_fork == data->right_fork)
 	{
-		thread_printer("has taken a fork\n", data);
+		thread_printer("has taken a fork\n", data, data->write_lock);
 		return (NULL);
 	}
 	if (data->philo_num % 2 == 0)
