@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/17 01:25:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/17 10:45:58 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	thread_loop_function(t_philo_data *data)
 		pthread_mutex_unlock(data->right_fork);
 		if (philo_dead(data, 1) == 1)
 			break ;
-		if (*data->philo_eat_amount != -1)
-			*data->philo_eat_amount -= 1;
 		thread_printer("is sleeping\n", data);
 		usleep(data->time_to_sleep * 1000);
 	}
