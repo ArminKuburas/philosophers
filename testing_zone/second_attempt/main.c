@@ -6,40 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/18 14:13:22 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:19:54 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	use_malloc(t_pointers *data, int argv_int)
-{
-	data->philosophers = malloc(sizeof(pthread_t) * argv_int);
-	if (data->philosophers == NULL)
-		return (free_pointer_data(data, 1));
-	data->forks = malloc(sizeof(pthread_mutex_t) * argv_int);
-	if (data->forks == NULL)
-		return (free_pointer_data(data, 1));
-	data->monitors = malloc(sizeof(pthread_mutex_t) * argv_int);
-	if (data->monitors == NULL)
-		return (free_pointer_data(data, 1));
-	data->philo_wait_start = malloc(sizeof(struct timeval) * argv_int);
-	if (data->philo_wait_start == NULL)
-		return (free_pointer_data(data, 1));
-	data->philo_died = malloc(sizeof(int) * argv_int);
-	if (data->philo_died == NULL)
-		return (free_pointer_data(data, 1));
-	data->philo_data = malloc(sizeof(t_philo_data) * argv_int);
-	if (data->philo_data == NULL)
-		return (free_pointer_data(data, 1));
-	data->philo_eat_amount = malloc(sizeof(int) * argv_int);
-	if (data->philo_eat_amount == NULL)
-		return (free_pointer_data(data, 1));
-	data->eaten_enough = malloc(sizeof(int) * argv_int);
-	if (data->eaten_enough == NULL)
-		return (free_pointer_data(data, 1)); 
-	return (0);
-}
 
 int	mutex_init(t_pointers *data, int *argv_int)
 {
@@ -81,9 +52,8 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		data->philo_data[i].philo_num = i + 1;
 		data->philo_data[i].time_to_eat = argv_int[2];
 		data->philo_data[i].time_to_sleep = argv_int[3];
-		data->philo_data[i].philo_eat_amount = &data->philo_eat_amount[i];
-		*data->philo_data[i].philo_eat_amount = argv_int[4];
-		data->philo_data[i].philo_died = &data->philo_died[i];
+		data->philo_data[i].philo_eat_amount = argv_int[4];
+		data->philo_data[i].philo_died = &data->philo_died;
 		data->philo_data[i].initial_time = time;
 		data->philo_data[i].time_before_eat = &data->philo_wait_start[i];
 		data->philo_data[i].time_before_eat->tv_usec = time.tv_usec;

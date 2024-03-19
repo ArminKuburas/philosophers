@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/18 14:52:08 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:17:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_philo_data
 	int				philo_num;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				*philo_eat_amount;
+	int				philo_eat_amount;
 	int				*philo_died;
 	struct timeval	initial_time;
 	struct timeval	*time_before_eat;
@@ -38,11 +38,9 @@ typedef struct s_pointers
 {
 	pthread_t		philosophers[200];
 	pthread_mutex_t	forks[200];
-	pthread_mutex_t	monitors;
+	pthread_mutex_t	monitor;
 	pthread_mutex_t	write_lock;
-	pthread_mutex_t eat_lock;
-	int				*philo_eat_amount;
-	int				*eaten_enough;
+	pthread_mutex_t	eat_lock;
 	struct timeval	*philo_wait_start;
 	int				philo_died;
 	t_philo_data	*philo_data;
