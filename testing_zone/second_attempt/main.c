@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 15:42:52 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:48:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,11 @@ int	main(int argc, char **argv)
 	argument_converter(argv_int, argv, argc);
 	if (argv_int[0] == -1)
 		return (1);
+	if (argv_int[0] > 200)
+	{
+		printf("You have given too many philosophers\n");
+		return (1);
+	}
 	roundtable(&data, argv_int);
 	return (0);
 }
