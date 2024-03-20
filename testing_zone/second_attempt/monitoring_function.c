@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:47:18 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 15:37:08 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:44:14 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	check_starvation(t_pointers *data, int timeToDie, int i)
 	long			elapsed_time;
 
 	gettimeofday(&crnt_time, NULL);
-	pthread_mutex_lock(&data->monitor, NULL);
+	pthread_mutex_lock(&data->monitor);
 	elapsed_time = time_diff(data->philo_data[i].time_before_eat, crnt_time);
-	if (time_diff(data->, crnt_time) >= timeToDie)
+	if (elapsed_time >= timeToDie)
 	{
 		data->philo_died = 1;
 		pthread_mutex_lock(&data->write_lock);
@@ -56,9 +56,7 @@ int	check_starvation(t_pointers *data, int timeToDie, int i)
 void	monitoring(t_pointers *data, int *argv_int)
 {
 	int				i;
-	int				set_to_dead;
 
-	set_to_dead = 0;
 	i = 0;
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 12:53:26 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:42:52 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ int	set_up_philo_data(t_pointers *data, int *argv_int)
 		i++;
 	}
 	return (0);
+}
+
+void	thread_failed_handler(t_pointers *data, int i)
+{
+	while (i > 0)
+		pthread_mutex_destroy(&data->forks[i--]);
+	pthread_mutex_lock(&data->monitor);
+	data->philo_died = 1;
+	pthread_mutex_unlock(&data->monitor);
+	printf("Thread creation failed\n");
 }
 
 int	create_threads(t_pointers *data, int *argv_int)
