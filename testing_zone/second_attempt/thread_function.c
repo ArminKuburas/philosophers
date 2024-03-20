@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/18 12:27:20 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:18:35 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	monitor_data_handler(t_philo_data *data)
 {
-	if (*data->philo_eat_amount != -1 && *data->philo_eat_amount > 0)
-		*data->philo_eat_amount -= 1;
-	printf("This is philo %d and this is how much it should still eat %d\n", data->philo_num, *data->philo_eat_amount);
+	if (data->philo_eat_amount != -1 && data->philo_eat_amount > 0)
+		data->philo_eat_amount -= 1;
 	gettimeofday(data->time_before_eat, NULL);
 }
 
@@ -43,7 +42,6 @@ int	philo_dead(t_philo_data *data, int type)
 	}
 	if (type == 3)
 		monitor_data_handler(data);
-	printf("This is the monitor address %p inside thread\n", data->monitor);
 	pthread_mutex_unlock(data->monitor);
 	return (0);
 }
@@ -55,11 +53,9 @@ void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock)
 
 	gettimeofday(&current_time, NULL);
 	elapsed_time = time_diff(data->initial_time, current_time);
-	if (w_lock == NULL)
-		printf("check\n");
-	//pthread_mutex_lock(w_lock);
+	pthread_mutex_lock(w_lock);
 	printf("%ld %d %s", elapsed_time, data->philo_num, str);
-	//pthread_mutex_unlock(w_lock);
+	pthread_mutex_unlock(w_lock);
 }
 
 void	thread_loop_function(t_philo_data *data)
@@ -99,7 +95,7 @@ void	*thread_func(void *param)
 		return (NULL);
 	}
 	if (data->philo_num % 2 == 0)
-		usleep(50);
+		usleep(10);
 	thread_loop_function(data);
 	return (NULL);
 }

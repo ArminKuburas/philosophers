@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/19 15:17:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:56:33 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ typedef struct s_philo_data
 	int				philo_eat_amount;
 	int				*philo_died;
 	struct timeval	initial_time;
-	struct timeval	*time_before_eat;
+	struct timeval	time_before_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
 	pthread_mutex_t	*write_lock;
+	pthread_mutex_t	*eat_lock;
 }				t_philo_data;
 
 typedef struct s_pointers
@@ -41,9 +42,8 @@ typedef struct s_pointers
 	pthread_mutex_t	monitor;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	eat_lock;
-	struct timeval	*philo_wait_start;
 	int				philo_died;
-	t_philo_data	*philo_data;
+	t_philo_data	philo_data[200];
 }				t_pointers;
 
 int		ft_isdigit(int c);

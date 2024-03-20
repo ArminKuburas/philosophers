@@ -5,7 +5,6 @@ CFLAGS = -Wall -Wextra -Werror
 SANITIZE = -fsanitize=address
 SRCS = main.c \
 		argument_converter.c \
-		free_pointers.c \
 		ft_atoi.c \
 		ft_isdigit.c \
 		ft_memset.c \
