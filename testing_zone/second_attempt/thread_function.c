@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 19:44:29 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:35:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock)
 	pthread_mutex_unlock(w_lock);
 }
 
+int	ft_usleep(int miliseconds)
+{
+	long	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < miliseconds)
+		usleep(500);
+	usleep(500);
+	return (0);
+}
+
 void	thread_loop_function(t_philo_data *data)
 {
 	while (1)
@@ -73,14 +84,16 @@ void	thread_loop_function(t_philo_data *data)
 			break ;
 		thread_printer("has taken a fork\n", data, data->write_lock);
 		thread_printer("is eating\n", data, data->write_lock);
-		usleep(data->time_to_eat * 1000);
+		ft_usleep(data->time_to_eat);
 		pthread_mutex_unlock(data->left_fork);
 		pthread_mutex_unlock(data->right_fork);
 		if (philo_dead(data, 1) == 1)
 			break ;
 		thread_printer("is sleeping\n", data, data->write_lock);
+		ft_usleep(data->time_to_sleep);
+		if (philo_dead(data, 1) == 1)
+			break ;
 		thread_printer("is thinking\n", data, data->write_lock);
-		usleep(data->time_to_sleep * 1000);
 	}
 }
 
@@ -95,7 +108,7 @@ void	*thread_func(void *param)
 		return (NULL);
 	}
 	if (data->philo_num % 2 == 0)
-		usleep(10);
+		usleep(50);
 	thread_loop_function(data);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 11:56:33 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:23:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	*thread_func(void *param);
 long	time_diff(struct timeval initial_time, struct timeval current_time);
 void	*ft_memset(void *b, int c, size_t len);
 void	monitoring(t_pointers *data, int *argv_int);
+long	get_current_time(void);
 
 
 #endif

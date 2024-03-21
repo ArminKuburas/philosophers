@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:47:18 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 19:44:14 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:44:28 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	check_starvation(t_pointers *data, int timeToDie, int i)
 	struct timeval	crnt_time;
 	long			elapsed_time;
 
-	gettimeofday(&crnt_time, NULL);
 	pthread_mutex_lock(&data->monitor);
+	gettimeofday(&crnt_time, NULL);
 	elapsed_time = time_diff(data->philo_data[i].time_before_eat, crnt_time);
 	if (elapsed_time >= timeToDie)
 	{
