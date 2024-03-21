@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/20 19:48:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:00:55 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	mutex_init(t_pointers *data, int *argv_int)
 
 int	set_up_philo_data(t_pointers *data, int *argv_int)
 {
-	int				i;
-	struct timeval	time;
+	int		i;
+	long	time;
 
 	i = 0;
-	gettimeofday(&time, NULL);
+	time = get_current_time();
 	while (i < argv_int[0])
 	{
 		data->philo_data[i].philo_num = i + 1;

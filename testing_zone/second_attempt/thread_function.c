@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/21 14:35:26 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:03:16 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	monitor_data_handler(t_philo_data *data)
 {
 	if (data->philo_eat_amount != -1 && data->philo_eat_amount > 0)
 		data->philo_eat_amount -= 1;
-	gettimeofday(&data->time_before_eat, NULL);
+	data->time_before_eat = get_current_time();
 }
 
 int	philo_dead(t_philo_data *data, int type)
@@ -48,11 +48,11 @@ int	philo_dead(t_philo_data *data, int type)
 
 void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock)
 {
-	long			elapsed_time;
-	struct timeval	current_time;
+	long	elapsed_time;
+	long	current_time;
 
-	gettimeofday(&current_time, NULL);
-	elapsed_time = time_diff(data->initial_time, current_time);
+	current_time = get_current_time();
+	elapsed_time = current_time - data->initial_time;
 	pthread_mutex_lock(w_lock);
 	printf("%ld %d %s", elapsed_time, data->philo_num, str);
 	pthread_mutex_unlock(w_lock);

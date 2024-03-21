@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:47:18 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/21 13:44:28 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:07:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,16 @@ int	check_everyone_fed(t_pointers *data, int amount)
 
 int	check_starvation(t_pointers *data, int timeToDie, int i)
 {
-	struct timeval	crnt_time;
-	long			elapsed_time;
+	long	current_time;
 
 	pthread_mutex_lock(&data->monitor);
-	gettimeofday(&crnt_time, NULL);
-	elapsed_time = time_diff(data->philo_data[i].time_before_eat, crnt_time);
-	if (elapsed_time >= timeToDie)
+	current_time = get_current_time();
+	current_time -= data->philo_data[i].time_before_eat;
+	if (current_time >= timeToDie)
 	{
 		data->philo_died = 1;
 		pthread_mutex_lock(&data->write_lock);
-		printf("%ld %d died\n", elapsed_time, i + 1);
+		printf("%ld %d died\n", current_time, i + 1);
 		pthread_mutex_unlock(&data->write_lock);
 		pthread_mutex_unlock(&data->monitor);
 		return (1);

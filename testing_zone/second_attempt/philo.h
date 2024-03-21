@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/21 12:23:24 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:59:58 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_philo_data
 	int				time_to_sleep;
 	int				philo_eat_amount;
 	int				*philo_died;
-	struct timeval	initial_time;
-	struct timeval	time_before_eat;
+	long			initial_time;
+	long			time_before_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*monitor;
