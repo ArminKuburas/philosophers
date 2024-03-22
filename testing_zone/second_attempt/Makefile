@@ -13,6 +13,7 @@ SRCS = main.c \
 		monitoring_function.c \
 		philo_helper_functions.c \
 		thread_function.c \
+		failure_handling.c
 
 OBJS = $(SRCS:.c=.o)
 all : $(NAME)
