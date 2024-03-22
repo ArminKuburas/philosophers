@@ -6,9 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 01:30:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/23 01:32:25 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:38:59 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
 
 int	mutex_failed(t_pointers *data, int i, int type)
 {

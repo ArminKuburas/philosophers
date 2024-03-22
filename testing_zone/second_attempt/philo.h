@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/23 01:36:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:38:41 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ long	get_current_time(void);
 void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock);
 int		mutex_failed(t_pointers *data, int i, int type);
 void	thread_failed_handler(t_pointers *data, int i);
+void	close_mutexes(t_pointers *data, int *argv_int);
 
 #endif
