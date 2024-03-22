@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SANITIZE = -fsanitize=address
+SANITIZE = -fsanitize=thread
 SRCS = main.c \
 		argument_converter.c \
 		ft_atoi.c \

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:07:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/21 15:03:16 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/22 01:45:57 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	*thread_func(void *param)
 		thread_printer("has taken a fork\n", data, data->write_lock);
 		return (NULL);
 	}
-	if (data->philo_num % 2 == 0)
-		usleep(50);
+	if (data->philo_num % 2 == 0 || data->philo_num == data->philo_amount)
+		usleep(10000);
 	thread_loop_function(data);
 	return (NULL);
 }

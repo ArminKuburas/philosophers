@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:12 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/21 14:59:58 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:20:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct s_philo_data
 {
 	int				philo_num;
+	int				philo_amount;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				philo_eat_amount;
