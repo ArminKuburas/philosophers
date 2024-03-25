@@ -6,26 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:39:20 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/23 01:36:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/25 09:17:52 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-long	time_diff(struct timeval initial_time, struct timeval current_time)
-{
-	long	seconds;
-	long	microseconds;
-
-	seconds = current_time.tv_sec - initial_time.tv_sec;
-	microseconds = current_time.tv_usec - initial_time.tv_usec;
-	if (microseconds < 0)
-	{
-		seconds--;
-		microseconds += 1000000;
-	}
-	return ((seconds * 1000) + (microseconds / 1000));
-}
 
 long	get_current_time(void)
 {
@@ -45,4 +30,19 @@ void	thread_printer(char *str, t_philo_data *data, pthread_mutex_t *w_lock)
 	pthread_mutex_lock(w_lock);
 	printf("%ld %d %s", elapsed_time, data->philo_num, str);
 	pthread_mutex_unlock(w_lock);
+}
+
+void	close_mutexes(t_pointers *data, int *argv_int)
+{
+	int	i;
+
+	i = 0;
+	while (i < argv_int[0])
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->eat_lock);
+	pthread_mutex_destroy(&data->monitor);
 }

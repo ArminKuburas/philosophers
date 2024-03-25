@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 01:30:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/23 01:38:59 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/25 09:18:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,4 @@ void	thread_failed_handler(t_pointers *data, int i)
 	data->philo_died = 1;
 	pthread_mutex_unlock(&data->monitor);
 	printf("Thread creation failed\n");
-}
-
-void	close_mutexes(t_pointers *data, int *argv_int)
-{
-	int	i;
-
-	i = 0;
-	while (i < argv_int[0])
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->eat_lock);
-	pthread_mutex_destroy(&data->monitor);
 }
