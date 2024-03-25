@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:08:00 by akuburas          #+#    #+#             */
-/*   Updated: 2024/03/23 01:32:16 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/03/25 07:39:39 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,6 @@ int	roundtable(t_pointers *data, int *argv_int)
 
 	if (mutex_init(data, argv_int) == 1)
 		return (1);
-	printf("Mutex init success\n");
-	printf("This is mutex forks[0]: %p\n", &data->forks[0]);
-	printf("This is mutex forks[1]: %p\n", &data->forks[1]);
-	printf("This is mutex forks[2]: %p\n", &data->forks[2]);
-	printf("This is mutex forks[3]: %p\n", &data->forks[3]);
-	printf("This is mutex forks[4]: %p\n", &data->forks[4]);
-	printf("This is mutex write_lock: %p\n", &data->write_lock);
-	printf("This is mutex eat_lock: %p\n", &data->eat_lock);
-	printf("This is mutex monitor: %p\n", &data->monitor);
-	printf("This is current time %ld\n", get_current_time());
-	printf("----------------------\n");
 	set_up_philo_data(data, argv_int);
 	if (create_threads(data, argv_int) == 1)
 		return (1);
